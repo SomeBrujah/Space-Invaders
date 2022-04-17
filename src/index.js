@@ -4,6 +4,31 @@ import { Ship } from "./ship.js";
 import { Laser } from './laser';
 import { Alien } from './alien';
 
+const overlay = document.createElement('div');
+overlay.classList.add('overlay');
+
+const buttonPlayAgain = document.createElement('button');
+buttonPlayAgain.classList.add('reGame');
+buttonPlayAgain.onclick = (e) => {
+    location.reload();
+};
+buttonPlayAgain.textContent = 'Play'
+
+const win_popup = document.createElement('div');
+win_popup.classList.add('win_popup');
+const win_title = document.createElement('p');
+win_title.textContent = 'You Win!'
+win_title.classList.add('win_title');
+win_popup.append(win_title, buttonPlayAgain);
+
+const lose_popup = document.createElement('div');
+lose_popup.classList.add('lose_popup');
+const lose_title = document.createElement('p');
+lose_title.textContent = 'You lose!';
+lose_title.classList.add('lose_title');
+lose_popup.append(lose_title, buttonPlayAgain);
+document.body.append(overlay, win_popup, lose_popup);
+
 const keys = {
     a: false,
     d: false,
@@ -28,10 +53,6 @@ function addScore(score) {
     scores += score;
 }
 
-function removeAliens(alien) {
-    aliens.splice(aliens.indexOf(alien), 1);
-    alien.remove();
-}
 
 function isLasersHit(entity_1, entity_2) {
     const rect1 = entity_1.element.getBoundingClientRect();
@@ -51,13 +72,21 @@ function hitLasers(entity) {
     return null;
 }
 
-for (let row = 0; row < 5; row++) {
+for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 8; col++) {
-        aliens.push(new Alien(col * 120 + 60, row * 120 + 60, hitLasers, removeAliens, addScore))
+        aliens.push(new Alien(col * 150 + 60, row * 150 + 60, hitLasers, removeAliens, addScore));
     }
+}
+let countAlien = aliens.length;
+
+function removeAliens(alien) {
+    countAlien--;
+    aliens.splice(aliens.indexOf(alien), 1);
+    alien.remove();
 }
 
 function getMostLeftAlien() {
+    if (aliens.length === 0) return;
     return aliens.reduce((leftestAlien, currentAlient) => {
         return (currentAlient.xCoordinate < leftestAlien.xCoordinate
             ? currentAlient
@@ -67,6 +96,7 @@ function getMostLeftAlien() {
 }
 
 function getMostRightAlien() {
+    if (aliens.length === 0) return;
     return aliens.reduce((rightestAlien, currentAlient) => {
         return (currentAlient.xCoordinate > rightestAlien.xCoordinate
             ? currentAlient
@@ -100,22 +130,38 @@ function update() {
     const leftestAlien = getMostLeftAlien();
     const rightestAlien = getMostRightAlien();
 
+    if (leftestAlien == undefined || rightestAlien == undefined) {
+        table.textContent = `Your score is ${scores}`;
+        clearInterval(gameLoop);
+        overlay.style.visibility = 'visible';
+        win_popup.style.visibility = 'visible';
+        console.log("Game almost end!");
+    }
+
     if (leftestAlien.xCoordinate < 30) {
         aliens.forEach(alien => {
             alien.setDirectionRight();
             alien.moveDown();
         });
     }
+
     if (rightestAlien.xCoordinate > window.innerWidth - 150) {
         aliens.forEach(alien => {
             alien.setDirectionLeft();
             alien.moveDown();
         });
     }
-    
-    if(aliens.length < 10) {
-        console.log("Game almost end!")
-    }
+
+    aliens.forEach(alien => {
+        if (alien.yCoordinate > window.innerHeight - 200) {
+            table.textContent = `Your score is ${scores}`;
+            clearInterval(gameLoop);
+            overlay.style.visibility = 'visible';
+            lose_popup.style.visibility = 'visible';
+            console.log("Game almost end!");
+            clearInterval(gameLoop);
+        }
+    })
 
     table.textContent = `Your score is ${scores}`;
 }

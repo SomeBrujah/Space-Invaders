@@ -2,11 +2,10 @@ body {
     background-color: black;
 }
 
-.ship {
-    width: 100px;
-    height: 100px;
-    background-color: greenyellow;
-    position: fixed;
+.defender_cell {
+    background-color: #1bff80;
+    width: 32px;
+    height: 32px;
 }
 
 .laser{
@@ -16,11 +15,11 @@ body {
     background-color: red;
 }
 
-.alien {
-    width: 100px;
-    height: 100px;
-    background-color: greenyellow;
-    position: fixed;
+.alien_cell {
+    background-color: #ffb641;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
 }
 
 .score {
@@ -28,7 +27,67 @@ body {
     margin-top: 10px;
     left: calc(50% - 200px);
     font-size: 40px;
-    color: white;
+    color: #1bff80;
     width: auto;
     height: 40px;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.651);
+    width: 100%;
+    height: 100vh;
+    z-index: 3;
+    position: absolute;
+    visibility: hidden;
+}
+
+.win_popup{
+    width: 400px;
+    min-height: 150px;
+    background-color: black;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 4;
+    border: 2px solid #1bff80;
+    left: calc(50% - 200px);
+    top: calc(50% - 75px);
+    visibility: hidden;
+    text-align: center;
+}
+
+.win_title {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 36px;
+    color: #1bff80;
+}
+
+.lose_popup{
+    width: 400px;
+    min-height: 150px;
+    background-color: black;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 4;
+    border: 2px solid #ffb641;
+    left: calc(50% - 200px);
+    top: calc(50% - 75px);
+    visibility: hidden;
+    text-align: center;
+}
+
+.lose_title {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 36px;
+    color: #ffb641;
+}
+.reGame {
+    width: 100px;
+    height: 50px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #1bff80;
+    color: black;
+    font-size: 18px;
 }

@@ -12,11 +12,34 @@ export class Ship extends Entity {
 
     initialize(){
         const div = document.createElement('div');
-        div.classList.add('ship');
-        
-        document.body.appendChild(div);
+        const top = document.createElement('div');
+        const bottom = document.createElement('div');
+        const cell_1 = document.createElement('div');
+        const cell_2 = document.createElement('div');
+        const cell_3 = document.createElement('div');
+        const cell_4 = document.createElement('div');
+
+        div.append(top, bottom);
+        top.append(cell_1);
+        bottom.append(cell_2, cell_3, cell_4);
+
+        div.style.width = 'min-content';
+        div.style.position = 'absolute';
+        div.style.bottom = 0 + 'px';
         div.style.left = `${this.xCoordinate}px`;
-        div.style.top =`${this.yCoordinate}px`;
+        top.style.display = 'flex';
+        top.style.justifyContent = 'center';
+        bottom.style.display = 'flex';
+        bottom.style.justifyContent = 'space-between';
+        cell_1.classList.add('defender_cell');
+        cell_1.style.marginBottom = 5 + 'px';
+        cell_2.classList.add('defender_cell');
+        cell_2.style.marginRight = 5 + 'px';
+        cell_3.classList.add('defender_cell');
+        cell_3.style.marginRight = 5 + 'px';
+        cell_4.classList.add('defender_cell');
+
+        document.body.appendChild(div);
         return div;
     }
 
