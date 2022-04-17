@@ -1,4 +1,5 @@
 import { Entity } from "./entity";
+import { Laser } from "./laser";
 
 export class Ship extends Entity {
     constructor(){
@@ -6,7 +7,7 @@ export class Ship extends Entity {
         this.xCoordinate = (window.innerWidth / 2) - 50;
         this.yCoordinate = window.innerHeight - 100;
         this.element = this.initialize();
-        this.speed = 2;
+        this.reloading = false;
     }
 
     initialize(){
@@ -25,5 +26,16 @@ export class Ship extends Entity {
 
     moveLeft(){
         this.setXCoordinate(this.xCoordinate - this.speed);
+    }
+
+    fire(all_shots_array) {
+        if(this.reloading === true) {
+            return;
+        }
+        all_shots_array.push(new Laser(this.xCoordinate + 45, this.yCoordinate));
+        this.reloading = true;
+        setTimeout(()=>{
+            this.reloading = false;
+        }, 1000)
     }
 }

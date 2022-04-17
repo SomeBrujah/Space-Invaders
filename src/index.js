@@ -1,12 +1,14 @@
 import './style/reset.scss'
 import './style/style.scss';
 import { Ship } from "./ship.js";
+import { Laser } from './laser';
 
 const keys = {
     a: false,
     d: false,
     [' ']: false
 }
+const shots = [];
 
 document.addEventListener('keydown', (e) => {
     keys[e.key] = true;
@@ -23,10 +25,9 @@ function update() {
         ship.moveRight();
     } else if (keys['a'] && ship.xCoordinate > 0) {
         ship.moveLeft();
-    }
-
+    } 
     if(keys[' ']) {
-        
+        ship.fire(shots);
     }
 }
 

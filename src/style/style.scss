@@ -9,8 +9,9 @@ body {
     position: fixed;
 }
 
-.laser {
-    width: 2px;
+.laser{
+    // position: 'absolute';
+    width: 10px;
     height: 10px;
     background-color: red;
 }
