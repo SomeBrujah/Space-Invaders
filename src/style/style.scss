@@ -22,3 +22,13 @@ body {
     background-color: greenyellow;
     position: fixed;
 }
+
+.score {
+    position: absolute;
+    margin-top: 10px;
+    left: calc(50% - 200px);
+    font-size: 40px;
+    color: white;
+    width: auto;
+    height: 40px;
+}

@@ -1,13 +1,15 @@
 import { Entity } from "./entity.js";
 
 export class Alien extends Entity {
-    constructor(xCoordinate, yCoordinate, hitLazers) {
+    constructor(xCoordinate, yCoordinate, hitLazers, removeAliens, addScore) {
         super();
         this.element = this.initialize();
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.speed = 1;
         this.hitLazers = hitLazers;
+        this.removeAliens = removeAliens;
+        this.addScore = addScore;
         this.setXCoordinate(this.xCoordinate);
         this.setYCoordinate(this.yCoordinate);
         this.direction = 'right';
@@ -44,8 +46,9 @@ export class Alien extends Entity {
 
         const lazer = this.hitLazers(this);
         if(lazer) {
-            this.remove();
+            this.removeAliens(this);
             lazer.remove();
+            this.addScore(20);
         }
     }
 }

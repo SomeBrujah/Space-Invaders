@@ -11,6 +11,7 @@ const keys = {
 }
 const shots = [];
 const aliens = [];
+let scores = 0;
 
 document.addEventListener('keydown', (e) => {
     keys[e.key] = true;
@@ -19,9 +20,18 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
     keys[e.key] = false;
 })
+const table = document.querySelector('.score');
 
 const ship = new Ship();
 
+function addScore(score) {
+    scores += score;
+}
+
+function removeAliens(alien) {
+    aliens.splice(aliens.indexOf(alien), 1);
+    alien.remove();
+}
 
 function isLasersHit(entity_1, entity_2) {
     const rect1 = entity_1.element.getBoundingClientRect();
@@ -43,7 +53,7 @@ function hitLasers(entity) {
 
 for (let row = 0; row < 5; row++) {
     for (let col = 0; col < 8; col++) {
-        aliens.push(new Alien(col * 120 + 50, row * 120 + 50, hitLasers))
+        aliens.push(new Alien(col * 120 + 60, row * 120 + 60, hitLasers, removeAliens, addScore))
     }
 }
 
@@ -102,7 +112,12 @@ function update() {
             alien.moveDown();
         });
     }
+    
+    if(aliens.length < 10) {
+        console.log("Game almost end!")
+    }
 
+    table.textContent = `Your score is ${scores}`;
 }
 
 const gameLoop = setInterval(update, 1000 / 60)
