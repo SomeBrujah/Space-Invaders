@@ -30,11 +30,15 @@ export class Alien extends Entity {
         this.direction = 'left';
     }
 
+    moveDown() {
+        this.setYCoordinate(this.yCoordinate + this.element.offsetWidth/3);
+    }
+
     move() {
         if (this.direction === 'right') {
             this.setXCoordinate(this.xCoordinate + this.speed)
         } else if (this.direction === 'left') {
             this.setXCoordinate(this.xCoordinate - this.speed)
-        } 
+        }
     }
 }

@@ -73,11 +73,13 @@ function update() {
     if (leftestAlien.xCoordinate < 30) {
         aliens.forEach(alien => {
             alien.setDirectionRight();
+            alien.moveDown();
         });
     }
     if (rightestAlien.xCoordinate > window.innerWidth - 150) {
         aliens.forEach(alien => {
             alien.setDirectionLeft();
+            alien.moveDown();
         });
     }
 
