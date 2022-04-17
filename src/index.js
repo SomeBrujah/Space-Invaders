@@ -19,11 +19,14 @@ document.addEventListener('keyup', (e) => {
 const ship = new Ship();
 
 function update() {
-    if(keys['d']){
+    if (keys['d'] && ship.xCoordinate < window.innerWidth - 100) {
         ship.moveRight();
-    }
-    if(keys['a']){
+    } else if (keys['a'] && ship.xCoordinate > 0) {
         ship.moveLeft();
+    }
+
+    if(keys[' ']) {
+        
     }
 }
 

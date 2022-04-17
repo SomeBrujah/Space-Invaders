@@ -1,5 +1,8 @@
-export class Ship {
+import { Entity } from "./entity";
+
+export class Ship extends Entity {
     constructor(){
+        super();
         this.xCoordinate = (window.innerWidth / 2) - 50;
         this.yCoordinate = window.innerHeight - 100;
         this.element = this.initialize();
@@ -14,16 +17,6 @@ export class Ship {
         div.style.left = `${this.xCoordinate}px`;
         div.style.top =`${this.yCoordinate}px`;
         return div;
-    }
-
-    setXCoordinate(xCoordinate) {
-        this.xCoordinate = xCoordinate;
-        this.element.style.left = `${this.xCoordinate}px`;
-    }
-
-    setYCoordinate(yCoordinate) {
-        this.yCoordinate = yCoordinate;
-        this.element.style.top = `${this.yCoordinate}px`
     }
 
     moveRight(){
