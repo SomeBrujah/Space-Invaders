@@ -22,29 +22,49 @@ document.addEventListener('keyup', (e) => {
 
 const ship = new Ship();
 
+
+function isLasersHit(entity_1, entity_2) {
+    const rect1 = entity_1.element.getBoundingClientRect();
+    const rect2 = entity_2.element.getBoundingClientRect();
+    return !(rect1.right < rect2.left ||
+        rect1.left > rect2.right ||
+        rect1.bottom < rect2.top ||
+        rect1.top > rect2.bottom)
+}
+
+function hitLasers(entity) {
+    for (let laser of shots) {
+        if (isLasersHit(entity, laser)) {
+            return laser;
+        }
+    }
+    return null;
+}
+
 for (let row = 0; row < 5; row++) {
     for (let col = 0; col < 8; col++) {
-        aliens.push(new Alien(col * 120 + 50, row * 120 + 50))
+        aliens.push(new Alien(col * 120 + 50, row * 120 + 50, hitLasers))
     }
 }
 
-function getMostLeftAlien(){
-    return aliens.reduce((leftestAlien, currentAlient)=>{
+function getMostLeftAlien() {
+    return aliens.reduce((leftestAlien, currentAlient) => {
         return (currentAlient.xCoordinate < leftestAlien.xCoordinate
             ? currentAlient
             : leftestAlien
-            );
+        );
     });
 }
 
-function getMostRightAlien(){
-    return aliens.reduce((rightestAlien, currentAlient)=>{
+function getMostRightAlien() {
+    return aliens.reduce((rightestAlien, currentAlient) => {
         return (currentAlient.xCoordinate > rightestAlien.xCoordinate
             ? currentAlient
             : rightestAlien
-            );
+        );
     });
 }
+
 function update() {
     if (keys['d'] && ship.xCoordinate < window.innerWidth - 100) {
         ship.moveRight();
@@ -64,7 +84,7 @@ function update() {
     });
 
     aliens.forEach(alien => {
-        alien.move();
+        alien.update();
     });
 
     const leftestAlien = getMostLeftAlien();

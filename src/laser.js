@@ -23,8 +23,4 @@ export class Laser extends Entity {
     move(){
         this.setYCoordinate(this.yCoordinate - this.speed);
     }
-
-    remove(){
-        this.element.remove();
-    }
 }

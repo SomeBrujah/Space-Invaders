@@ -12,4 +12,8 @@ export class Entity {
         this.yCoordinate = yCoordinate;
         this.element.style.top = `${this.yCoordinate}px`
     }
+
+    remove(){
+        this.element.remove();
+    }
 }
