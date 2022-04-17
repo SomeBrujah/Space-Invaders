@@ -28,6 +28,23 @@ for (let row = 0; row < 5; row++) {
     }
 }
 
+function getMostLeftAlien(){
+    return aliens.reduce((leftestAlien, currentAlient)=>{
+        return (currentAlient.xCoordinate < leftestAlien.xCoordinate
+            ? currentAlient
+            : leftestAlien
+            );
+    });
+}
+
+function getMostRightAlien(){
+    return aliens.reduce((rightestAlien, currentAlient)=>{
+        return (currentAlient.xCoordinate > rightestAlien.xCoordinate
+            ? currentAlient
+            : rightestAlien
+            );
+    });
+}
 function update() {
     if (keys['d'] && ship.xCoordinate < window.innerWidth - 100) {
         ship.moveRight();
@@ -45,6 +62,25 @@ function update() {
             shots.slice(shots.indexOf(laser), 1)
         }
     });
+
+    aliens.forEach(alien => {
+        alien.move();
+    });
+
+    const leftestAlien = getMostLeftAlien();
+    const rightestAlien = getMostRightAlien();
+
+    if (leftestAlien.xCoordinate < 30) {
+        aliens.forEach(alien => {
+            alien.setDirectionRight();
+        });
+    }
+    if (rightestAlien.xCoordinate > window.innerWidth - 150) {
+        aliens.forEach(alien => {
+            alien.setDirectionLeft();
+        });
+    }
+
 }
 
 const gameLoop = setInterval(update, 1000 / 60)
