@@ -1,6 +1,6 @@
 export class Entity {
     constructor() {
-        this.speed = 2;
+        this.speed = 5;
     }
 
     setXCoordinate(xCoordinate) {

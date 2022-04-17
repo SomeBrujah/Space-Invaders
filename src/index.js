@@ -2,6 +2,7 @@ import './style/reset.scss'
 import './style/style.scss';
 import { Ship } from "./ship.js";
 import { Laser } from './laser';
+import { Alien } from './alien';
 
 const keys = {
     a: false,
@@ -9,6 +10,7 @@ const keys = {
     [' ']: false
 }
 const shots = [];
+const aliens = [];
 
 document.addEventListener('keydown', (e) => {
     keys[e.key] = true;
@@ -20,15 +22,29 @@ document.addEventListener('keyup', (e) => {
 
 const ship = new Ship();
 
+for (let row = 0; row < 5; row++) {
+    for (let col = 0; col < 8; col++) {
+        aliens.push(new Alien(col * 120 + 50, row * 120 + 50))
+    }
+}
+
 function update() {
     if (keys['d'] && ship.xCoordinate < window.innerWidth - 100) {
         ship.moveRight();
     } else if (keys['a'] && ship.xCoordinate > 0) {
         ship.moveLeft();
-    } 
-    if(keys[' ']) {
+    }
+    if (keys[' ']) {
         ship.fire(shots);
     }
+
+    shots.forEach(laser => {
+        laser.move();
+        if (laser.yCoordinate < 0) {
+            laser.remove();
+            shots.slice(shots.indexOf(laser), 1)
+        }
+    });
 }
 
-const gameLoop = setInterval(update, 20)
+const gameLoop = setInterval(update, 1000 / 60)
